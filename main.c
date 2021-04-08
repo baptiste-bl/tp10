@@ -37,7 +37,8 @@ void lireProduits(T_TableauDeProduits Lproduits){ // on charge nos produits
 		do{
 			fscanf(fichier,"%d %s %f",&(Lproduits[i].reference),Lproduits[i].libelle,&(Lproduits->prixU));
 			i++;
-			printf("%d\n",i);
+			printf("%d %s %f\n",Lproduits[i].reference,Lproduits[i].libelle,Lproduits->prixU);
+
 		}
 		while(!(feof(fichier)));
 
@@ -45,45 +46,47 @@ void lireProduits(T_TableauDeProduits Lproduits){ // on charge nos produits
 	fclose(fichier);
 }
 
-void lireCommande(char *nomCommande){
+void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 	char Prenom[20];
 	int numeroC[NB_MAX_PRODUITS], quantiteC[NB_MAX_PRODUITS];
 	T_TableauDeProduits Lproduits;
 	int k = 0;
 	int i = 0;
-	char facture[] = "./factures/facture";
+	char facture[29] = "./factures/facture";
 	char produits[] = "produits.txt";
 	FILE *fic = NULL;
-	for(int j = 7;j<11;j++){
-		strcat(facture,&nomCommande[j]); //on crée le répertoire et le nom de la facture
-	}
-
+		
+	strcat(facture,NNNN); //on crée le répertoire et le nom de la facture
+	
 	strcat(facture,".txt");
-	//fscanf("%s",Prenom);
 	lireProduits(Lproduits);
 
+	fscanf(fc,"%s",Prenom);
 	do{
-		fscanf("%d %d",&numeroC[i],&quantiteC[i]);
+		fscanf(fc,"%d %d",&numeroC[k],&quantiteC[k]);
 		k++;
 	}
-	while(!feof(nomCommande));
 
+	while(!feof(fc));
 
-
-	
-	fic = fopen(facture,"rt");
+							//creation de factures
+	fic = fopen(facture,"wt");
 	if(fic != NULL)
-	fprintf("CLIENT %s",Prenom);
+	fprintf(fic,"CLIENT %s\n",Prenom);
 	{
 		for(i = 0; i < k;i++ ){ //on balaye toutes les commandes
-			if(numeroC[i] == Lproduits[i].reference)
+			for(int j = 0; j < NB_MAX_PRODUITS;j++)
 			{
-				fprintf(fic,"%d %s (PU = %f€) :: %d€",quantiteC[i],Lproduits[i].libelle,Lproduits[i].prixU,Lproduits[i].prixU*quantiteC[i]);
+			
+			if(numeroC[i] == Lproduits[j].reference)
+			{
+				fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
+			}
 			}
 		
 		}
 	}
-	fclose(facture);
+	fclose(fic);
 
 
 }
@@ -112,7 +115,7 @@ void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt
 		if (ficCommande!=NULL) // si le fichier commandeNNNN.txt existe
 			{ 
 				printf("\n fichier %s present",nomCommande);
-				lireCommande(nomCommande); // à vous de coder cette fonction lors de ce TP9
+				lireCommande(ficCommande,nomCommande,NNNN); // à vous de coder cette fonction lors de ce TP9
 				fclose(ficCommande);
 			}
 		else

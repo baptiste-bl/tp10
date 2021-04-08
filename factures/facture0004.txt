@@ -1,0 +1,4 @@
+CLIENT BRIANT
+15 boite_punaises (PU = 0.000000€) :: 0.000000 €
+10 boite_trombones (PU = 0.000000€) :: 0.000000 €
+10 boite_100enveloppes11*13 (PU = 0.000000€) :: 0.000000 €

@@ -1,0 +1,4 @@
+CLIENT DUPONT
+45 boite_punaises (PU = 0.000000€) :: 0.000000 €
+15 boite_trombones (PU = 0.000000€) :: 0.000000 €
+80 boite_100enveloppes11*13 (PU = 0.000000€) :: 0.000000 €
