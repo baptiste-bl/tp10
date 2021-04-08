@@ -5,3 +5,6 @@ CLIENT DURAND
 25 ramette_feuillesA4 (PU = 9.900000€) :: 247.499985 €
 30 boite_100enveloppes11*21 (PU = 8.700000€) :: 261.000000 €
 15 boite_100enveloppes30*21 (PU = 14.700000€) :: 220.500000 €
+
+
+			total : 2844.000000 €

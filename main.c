@@ -58,6 +58,7 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 	char produits[] = "produits.txt";
 	int taille;
 	FILE *fic = NULL;
+	float total;
 		
 	strcat(facture,NNNN); //on crée le répertoire et le nom de la facture
 	
@@ -84,11 +85,15 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 				
 				if(numeroC[i] == Lproduits[j].reference)
 				{
+					total = total + (Lproduits[j].prixU)*(quantiteC[i]);
 					fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
+					
 				}
 			}
+
 		
 		}
+		fprintf(fic,"\n\n			total : %f €",total);
 	}
 	fclose(fic);
 
