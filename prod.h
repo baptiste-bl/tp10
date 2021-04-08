@@ -18,7 +18,7 @@ typedef struct
 
 typedef T_Stock T_TableauDeStock[ NB_MAX_PRODUITS];
 typedef T_Produit T_TableauDeProduits[ NB_MAX_PRODUITS];
-
+typedef char tab[29];
 
 
 

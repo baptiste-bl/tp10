@@ -4,4 +4,4 @@ CLIENT BRIANT
 10 boite_100enveloppes11*13 (PU = 8.800000€) :: 88.000000 €
 
 
-			total : 3948.500000 €
+			total : 2139.500000 €

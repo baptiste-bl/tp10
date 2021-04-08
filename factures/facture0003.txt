@@ -4,4 +4,4 @@ CLIENT DUPONT
 80 boite_100enveloppes11*13 (PU = 8.800000€) :: 704.000000 €
 
 
-			total : 3767.000000 €
+			total : 1958.000000 €

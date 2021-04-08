@@ -47,6 +47,37 @@ int lireProduits(T_TableauDeProduits Lproduits){ // on charge nos produits
 	fclose(fichier);
 	return i;
 }
+void alerte(T_Stock S,char *nomCommande)
+{
+	int i = 0;
+	FILE *fichier = NULL;
+	T_TableauDeStock Stock;
+	tab commande[NB_MAX_PRODUITS];
+	fichier = fopen("alerte.txt","r");
+	if(fichier != NULL){
+		do{
+			fscanf(fichier,"%d %d %s",&(Stock[i].reference), &(Stock[i].quantite),commande[i]);
+			i++;
+			printf("coucou");
+		}
+		while(!feof(fichier));
+		fclose(fichier);
+	}
+
+		fichier = fopen("alerte.txt","w");
+		for(int j = 0; j < i;j++)
+		{
+			if(S.reference != Stock[j].reference)
+			{
+				fprintf(fichier,"%d %s\n",Stock[i].reference,commande[i]);
+			}
+		}
+		fprintf(fichier,"%d %s",S.reference,commande[i]);
+
+			//printf("\n ref:%d %s %f\n",Lproduits[i].reference,Lproduits[i].libelle,Lproduits->prixU);
+
+}
+
 int lireStock(T_TableauDeStock Lstock){
     int i = 0; 
     FILE *fichier = NULL;
@@ -64,7 +95,7 @@ int lireStock(T_TableauDeStock Lstock){
     return i;
 }
 
-int stock(int numeroC, int quantiteC){
+int stock(int numeroC, int quantiteC, char* nomCommande){
 	T_TableauDeStock Lstock;
 	int taille;
 	taille = lireStock(Lstock);
@@ -93,6 +124,9 @@ int stock(int numeroC, int quantiteC){
 					fprintf(fic,"%d %d",Lstock[taille-1].reference,Lstock[taille-1].quantite); //dernière iteration on enlève le \n
 				}
 				fclose(fic);
+			}
+			else{
+				alerte(Lstock[i],nomCommande);
 			}
 
 		}
@@ -136,7 +170,7 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 			for(int j = 0; j < taille;j++)
 			{
 				
-				if((numeroC[i] == Lproduits[j].reference)  && (stock(numeroC[i],quantiteC[i]) ))
+				if((numeroC[i] == Lproduits[j].reference)  && (stock(numeroC[i],quantiteC[i],nomCommande) ))
 				{
 					total = total + (Lproduits[j].prixU)*(quantiteC[i]);
 					fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
