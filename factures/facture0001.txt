@@ -1,5 +1,8 @@
 CLIENT DUPONT
+10 crayon (PU = 1.200000€) :: 12.000000 €
+25 agrafeuse (PU = 5.600000€) :: 140.000000 €
+60 boite_100enveloppes11*21 (PU = 8.700000€) :: 522.000000 €
 50 boite_100enveloppes30*21 (PU = 14.700000€) :: 735.000000 €
 
 
-			total : 735.000000 €
+			total : 1409.000000 €

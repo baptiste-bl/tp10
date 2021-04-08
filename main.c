@@ -53,6 +53,8 @@ void alerte(T_Stock S,char *nomCommande)
 	FILE *fichier = NULL;
 	T_TableauDeStock Stock;
 	tab commande[NB_MAX_PRODUITS];
+	char ret[29];
+	int j = 0;
 	fichier = fopen("alerte.txt","r");
 	if(fichier != NULL){
 		do{
@@ -65,14 +67,15 @@ void alerte(T_Stock S,char *nomCommande)
 	}
 
 		fichier = fopen("alerte.txt","w");
-		for(int j = 0; j < i;j++)
+		for(j = 0; j < i;j++)
 		{
 			if(S.reference != Stock[j].reference)
 			{
-				fprintf(fichier,"%d %s\n",Stock[i].reference,commande[i]);
+				fprintf(fichier,"%d %s\n",Stock[i].reference,commande[j]);
 			}
 		}
 		fprintf(fichier,"%d %s",S.reference,commande[i]);
+		fclose(fichier);
 
 			//printf("\n ref:%d %s %f\n",Lproduits[i].reference,Lproduits[i].libelle,Lproduits->prixU);
 
