@@ -47,6 +47,59 @@ int lireProduits(T_TableauDeProduits Lproduits){ // on charge nos produits
 	fclose(fichier);
 	return i;
 }
+int lireStock(T_TableauDeStock Lstock){
+    int i = 0; 
+    FILE *fichier = NULL;
+    fichier = fopen("stock.txt","rt");
+    if(fichier != NULL){
+        do{
+            fscanf(fichier,"%d %d",&(Lstock[i].reference), &(Lstock[i].quantite));
+            
+            i++;
+
+        }
+        while(!(feof(fichier)));
+    }
+    fclose(fichier);
+    return i;
+}
+
+int stock(int numeroC, int quantiteC){
+	T_TableauDeStock Lstock;
+	int taille;
+	taille = lireStock(Lstock);
+
+		printf("%d\n",taille);
+
+
+	FILE *fic = NULL;
+	int reste;
+	int temoin = 0;
+	
+	for(int i = 0; i < taille;i++)
+	{
+		if (Lstock[i].reference == numeroC )
+		{
+			reste = ((Lstock[i].quantite) - quantiteC);
+			if(reste >= 0){
+				Lstock[i].quantite = reste;
+				temoin = 1;
+				fic = fopen("stock.txt","w");
+				if(fic != NULL){
+					for(int j = 0;j < taille-1;j++)
+					{
+						fprintf(fic,"%d %d\n",Lstock[j].reference,Lstock[j].quantite);
+					}
+					fprintf(fic,"%d %d",Lstock[taille-1].reference,Lstock[taille-1].quantite); //dernière iteration on enlève le \n
+				}
+				fclose(fic);
+			}
+
+		}
+	}
+	return temoin;
+
+}
 
 void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 	char Prenom[20];
@@ -74,7 +127,7 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 	while(!feof(fc));
 
 							//creation de factures
-	fic = fopen(facture,"wt");
+	fic = fopen(facture,"w");
 	if(fic != NULL)
 	fprintf(fic,"CLIENT %s\n",Prenom);
 
@@ -83,7 +136,7 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 			for(int j = 0; j < taille;j++)
 			{
 				
-				if(numeroC[i] == Lproduits[j].reference || stock(numeroC[i],quantiteC[i]))
+				if((numeroC[i] == Lproduits[j].reference)  && (stock(numeroC[i],quantiteC[i]) ))
 				{
 					total = total + (Lproduits[j].prixU)*(quantiteC[i]);
 					fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
@@ -99,11 +152,9 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 
 
 }
-int stock(int numeroC, int quantiteC){
-	T_TableauDeProduits Lproduits;
-	int taille = lireProduits(Lproduits);
 
-}
+
+
 
 void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt avec XXXX démarrant à N
 {
