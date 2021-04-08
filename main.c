@@ -83,7 +83,7 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 			for(int j = 0; j < taille;j++)
 			{
 				
-				if(numeroC[i] == Lproduits[j].reference)
+				if(numeroC[i] == Lproduits[j].reference || stock(numeroC[i],quantiteC[i]))
 				{
 					total = total + (Lproduits[j].prixU)*(quantiteC[i]);
 					fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
@@ -99,7 +99,11 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 
 
 }
+int stock(int numeroC, int quantiteC){
+	T_TableauDeProduits Lproduits;
+	int taille = lireProduits(Lproduits);
 
+}
 
 void lireLesCommandes() //cette fonction ouvre tous les fichiers commandeXXX.txt avec XXXX démarrant à N
 {
