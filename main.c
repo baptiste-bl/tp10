@@ -29,21 +29,23 @@ u=N%10;
 cu=48+u;
 N4[0]=cm;N4[1]=cc;N4[2]=cd;N4[3]=cu;N4[4]='\0';
 }
-void lireProduits(T_TableauDeProduits Lproduits){ // on charge nos produits
+int lireProduits(T_TableauDeProduits Lproduits){ // on charge nos produits
 	int i = 0; 
 	FILE *fichier = NULL;
 	fichier = fopen("produits.txt","rt");
 	if(fichier != NULL){
 		do{
-			fscanf(fichier,"%d %s %f",&(Lproduits[i].reference),Lproduits[i].libelle,&(Lproduits->prixU));
+			fscanf(fichier,"%d %s %f",&(Lproduits[i].reference),Lproduits[i].libelle,&(Lproduits[i].prixU));
+
+			//printf("\n ref:%d %s %f\n",Lproduits[i].reference,Lproduits[i].libelle,Lproduits->prixU);
 			i++;
-			printf("%d %s %f\n",Lproduits[i].reference,Lproduits[i].libelle,Lproduits->prixU);
 
 		}
 		while(!(feof(fichier)));
 
 	}
 	fclose(fichier);
+	return i;
 }
 
 void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
@@ -54,12 +56,13 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 	int i = 0;
 	char facture[29] = "./factures/facture";
 	char produits[] = "produits.txt";
+	int taille;
 	FILE *fic = NULL;
 		
 	strcat(facture,NNNN); //on crée le répertoire et le nom de la facture
 	
 	strcat(facture,".txt");
-	lireProduits(Lproduits);
+	taille = lireProduits(Lproduits);
 
 	fscanf(fc,"%s",Prenom);
 	do{
@@ -73,15 +76,16 @@ void lireCommande(FILE* fc,char *nomCommande, char *NNNN){
 	fic = fopen(facture,"wt");
 	if(fic != NULL)
 	fprintf(fic,"CLIENT %s\n",Prenom);
+
 	{
 		for(i = 0; i < k;i++ ){ //on balaye toutes les commandes
-			for(int j = 0; j < NB_MAX_PRODUITS;j++)
+			for(int j = 0; j < taille;j++)
 			{
-			
-			if(numeroC[i] == Lproduits[j].reference)
-			{
-				fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
-			}
+				
+				if(numeroC[i] == Lproduits[j].reference)
+				{
+					fprintf(fic,"%d %s (PU = %f€) :: %f €\n",quantiteC[i],Lproduits[j].libelle,Lproduits[j].prixU,(Lproduits[j].prixU)*(quantiteC[i]));
+				}
 			}
 		
 		}
